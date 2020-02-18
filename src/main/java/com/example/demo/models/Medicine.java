@@ -1,16 +1,17 @@
 package com.example.demo.models;
 
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Medicine{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @ManyToMany
+    List<User> userList;
 
     private String aggregateState;
 
@@ -23,7 +24,8 @@ public class Medicine{
     private String chemicalFormula;
 
 
-    private String brandName;
+    private String indication;
+
 
     public Long getId() {
         return id;
@@ -45,12 +47,12 @@ public class Medicine{
         this.url = url;
     }
 
-    public String getBrandName() {
-        return brandName;
+    public String getIndication() {
+        return indication;
     }
 
-    public void setBrandName(String brandName) {
-        this.brandName = brandName;
+    public void setIndication(String indication) {
+        this.indication = indication;
     }
 
     public String getGenericName() {
@@ -86,14 +88,15 @@ public class Medicine{
     }
 
     public Medicine(){}
-    public Medicine(String aggregateState, String url, String genericName, String description, Double avgWeight, String chemicalFormula, String brandName) {
+    public Medicine(String aggregateState, String url, String genericName, String description, Double avgWeight, String chemicalFormula, String indication) {
         this.aggregateState = aggregateState;
         this.url = url;
         this.genericName = genericName;
         this.description = description;
         this.avgWeight = avgWeight;
         this.chemicalFormula = chemicalFormula;
-        this.brandName = brandName;
+        this.indication = indication;
+
     }
 // generiraj getters i setters u IntelliJ za svite 4 atributi, so SHIFT+INSERT generiraj auto
 }
