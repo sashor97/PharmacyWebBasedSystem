@@ -15,6 +15,16 @@ public class Medicine{
 
     private String aggregateState;
 
+    public String getTradeName() {
+        return tradeName;
+    }
+
+    public void setTradeName(String tradeName) {
+        this.tradeName = tradeName;
+    }
+
+    private String tradeName;
+
     // ili validiraj u servis pri iteriranje na rezultatot od SPARQL kverito
     private String url;
 
@@ -88,7 +98,7 @@ public class Medicine{
     }
 
     public Medicine(){}
-    public Medicine(String aggregateState, String url, String genericName, String description, Double avgWeight, String chemicalFormula, String indication) {
+    public Medicine(String aggregateState, String url, String genericName, String description, Double avgWeight, String chemicalFormula, String indication,String tradeName) {
         this.aggregateState = aggregateState;
         this.url = url;
         this.genericName = genericName;
@@ -96,6 +106,7 @@ public class Medicine{
         this.avgWeight = avgWeight;
         this.chemicalFormula = chemicalFormula;
         this.indication = indication;
+        this.tradeName=tradeName;
 
     }
 // generiraj getters i setters u IntelliJ za svite 4 atributi, so SHIFT+INSERT generiraj auto
