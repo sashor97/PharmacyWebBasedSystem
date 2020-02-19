@@ -18,9 +18,7 @@ public class SparqlServiceImpl implements SparqlService {
         String SPARQLEndpoint = "http://wifo5-04.informatik.uni-mannheim.de/drugbank/sparql";
         String query = "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>" +
                 "PREFIX drugbank: <http://wifo5-04.informatik.uni-mannheim.de/drugbank/resource/drugbank/>" +
-                "PREFIX dbp: <http://dbpedia.org/property/>"+
-                "SELECT distinct ?nameUrl ?genericName ?chemFormula ?state ?description  ?indication ?avgWeight ?tradeName ?pharmgkbId" +
-                "FROM https://dbpedia.org/sparql"+
+                "SELECT distinct ?nameUrl ?genericName ?chemFormula ?state ?description  ?indication ?avgWeight  ?pharmgkbId" +
                 "WHERE { " +
                 "drugbank:drugs ^a ?nameUrl." +
                 "?nameUrl drugbank:chemicalFormula ?chemFormula;" +
@@ -29,7 +27,6 @@ public class SparqlServiceImpl implements SparqlService {
                 "drugbank:description ?description;"+
                 "drugbank:indication ?indication;"+
                 "drugbank:molecularWeightAverage ?avgWeight;"+
-                "dbp:tradename ?tradeName;"+
                 "drugbank:pharmgkbId ?pharmgkbId."+
                 "}" + "" +
                 "LIMIT "+limit;
@@ -44,7 +41,6 @@ public class SparqlServiceImpl implements SparqlService {
                 String resultGenericName = solution.get("genericName").toString();  // mozhe da treba substring(1, length-2) za urls
                 String chemFormula = solution.get("chemFormula").toString();  // mozhe da treba substring(1, length-2) za urls
                 String indication = solution.get("indication").toString();
-                String tradeName=solution.get("tradeName").toString();
                 System.out.println(resultGenericName);
                 System.out.println(resultName);
                 System.out.println(chemFormula);
@@ -57,7 +53,6 @@ public class SparqlServiceImpl implements SparqlService {
                 med.setIndication(indication);
                 med.setDescription(solution.get("description").toString());
                 med.setUrl(solution.get("nameUrl").toString());
-                med.setTradeName(getProperty(solution,tradeName));
                 list.add(med);
             }
         }

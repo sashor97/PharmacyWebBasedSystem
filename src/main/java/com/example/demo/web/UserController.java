@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin({"*","localhost:3000"})
 @RestController
 @RequestMapping("/user")
 public class UserController {
@@ -19,11 +20,12 @@ public class UserController {
     }
     @PostMapping(value = "/add")
     @ResponseBody
-    public User add(@RequestParam String username,@RequestParam String password) {
+    public User add(@RequestParam
+                                String username,@RequestParam String password) {
 
         User user=new User();
         user.setUsername(username);
-        user.setPassword(String.valueOf(password.hashCode()));
+        user.setPassword(password);
         return userService.save(user);
     }
 }
