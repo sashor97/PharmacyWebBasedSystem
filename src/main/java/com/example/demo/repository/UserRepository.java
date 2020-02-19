@@ -2,6 +2,7 @@ package com.example.demo.repository;
 
 import com.example.demo.models.Medicine;
 import com.example.demo.models.User;
+import org.apache.jena.sparql.algebra.Op;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -12,6 +13,7 @@ public interface UserRepository  extends JpaRepository<User, Long> {
     public User save(User user);
     public Optional<User> findById(Long id);
     public Optional<User> findByUsername(String username);
+    public Optional<User> findByUsernameAndPassword(String username, String password);
 
 
 }

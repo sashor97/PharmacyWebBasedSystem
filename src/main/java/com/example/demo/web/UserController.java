@@ -6,6 +6,7 @@ import com.example.demo.service.UserService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @CrossOrigin({"*","localhost:3000"})
 @RestController
@@ -24,8 +25,22 @@ public class UserController {
                                 String username,@RequestParam String password) {
 
         User user=new User();
-        user.setUsername(username);
-        user.setPassword(password);
-        return userService.save(user);
+        Optional<User> testUsername = userService.findByUsername(username);
+        if (testUsername.isPresent()) {
+            System.out.println("Postoi takov korisnik");
+            return user;
+        } else {
+            user.setUsername(username);
+            user.setPassword(String.valueOf(password.hashCode()));
+            return userService.save(user);
+        }
+    }
+    @PostMapping(value = "/login")
+    @ResponseBody
+    public User login(@RequestParam
+                            String username,@RequestParam String password) {
+        password=String.valueOf(password.hashCode());
+            return userService.findByUsernameAndPassword(username, password).orElse(null);
+
     }
 }
