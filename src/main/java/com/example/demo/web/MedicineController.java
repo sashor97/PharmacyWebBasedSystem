@@ -17,6 +17,7 @@ import java.util.Optional;
  * @author SageZhang
  * @version 2018/7/25
  */
+@CrossOrigin({"*","localhost:3000"})
 @RestController
 @RequestMapping("/home")
 public class MedicineController {
