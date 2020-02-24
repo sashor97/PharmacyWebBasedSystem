@@ -41,4 +41,34 @@ public class MedicineController {
 
         return sparqlService.getAllMedicine(param);
     }
+    @RequestMapping(value = "/filter/{param}/{state}")
+    @ResponseBody
+    public List<Medicine> getAggregateState(@PathVariable("param")Optional<Integer> param,@PathVariable("state")String state)
+    {
+        if(!param.isPresent()){
+            param=Optional.of(500);
+        }
+        if(state.equals("Liquid"))
+        {
+            return sparqlService.getAllMedicineAggregate(param.get(),"Liquid");
+        }
+        else if(state.equals("Solid"))
+        {
+            return sparqlService.getAllMedicineAggregate(param.get(),"Solid");
+        }
+        else{
+            return sparqlService.getAllMedicine(10);
+        }
+    }
+    @RequestMapping(value = "/sort/{param}/{type}")
+    @ResponseBody
+    public List<Medicine> getSorted(@PathVariable("param") Optional<Integer> param,@PathVariable("type") String type)
+    {
+        if(!param.isPresent()){
+            param=Optional.of(500);
+        }
+        return sparqlService.getAllMedicineSorted(param.get(),type);
+    }
+
+
 }
