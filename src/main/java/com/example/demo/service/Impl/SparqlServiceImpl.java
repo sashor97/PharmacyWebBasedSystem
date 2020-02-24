@@ -217,6 +217,48 @@ public class SparqlServiceImpl implements SparqlService {
     }
 
 
+    @Override
+    public List<Medicine> searchMedicineByName(String name) {
+        List<Medicine> list = Lists.newArrayList();
+        String SPARQLEndpoint = "http://wifo5-04.informatik.uni-mannheim.de/drugbank/sparql";
+        String query = "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>" +
+                "PREFIX drugbank: <http://wifo5-04.informatik.uni-mannheim.de/drugbank/resource/drugbank/>" +
+                "SELECT distinct ?nameUrl ?genericName ?chemFormula ?state ?description  ?indication ?avgWeight  ?pharmgkbId" +
+                "WHERE { " +
+                "drugbank:drugs ^a ?nameUrl." +
+                "?nameUrl drugbank:chemicalFormula ?chemFormula;" +
+                "drugbank:genericName ?genericName;" +
+                "drugbank:state ?state;"+
+                "drugbank:description ?description;"+
+                "drugbank:indication ?indication;"+
+                "drugbank:molecularWeightAverage ?avgWeight;"+
+                "drugbank:pharmgkbId ?pharmgkbId." +
+                "FILTER regex(?genericName, '"+name+"', 'i')"+
+                "}" + "" +
+                "LIMIT 10";
+
+
+        Query sparqlQuery = QueryFactory.create(query);
+        try (QueryExecution queryExecution = QueryExecutionFactory.sparqlService(SPARQLEndpoint, sparqlQuery)) {
+            ResultSet resultSet = queryExecution.execSelect();
+            while (resultSet.hasNext()) {
+                QuerySolution solution = resultSet.nextSolution();
+                Medicine med =new Medicine();
+                med.setUrl(getProperty(solution,"nameUrl"));
+                med.setAggregateState(getProperty(solution,"state"));
+                med.setGenericName(getProperty(solution,"genericName"));
+                med.setAvgWeight(Double.parseDouble(solution.get("avgWeight").toString()));
+                med.setChemicalFormula(getProperty(solution,"chemFormula"));
+                med.setIndication(getProperty(solution,"indication"));
+                med.setDescription(getProperty(solution,"description"));
+                list.add(med);
+            }
+        }
+
+        System.out.println(list);
+        return list;
+    }
+
     private String getProperty(QuerySolution solution, String state){
         return solution.get(state)!= null ? solution.get(state).toString() : "";
     }

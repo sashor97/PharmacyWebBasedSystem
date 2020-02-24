@@ -71,4 +71,10 @@ public class MedicineController {
     }
 
 
+
+    @RequestMapping(value = "/search/{param}")
+    @ResponseBody
+    public List<Medicine> searchMedicineByName(@PathVariable("param") String param) {
+        return sparqlService.searchMedicineByName(param);
+    }
 }
