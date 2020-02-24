@@ -1,0 +1,10 @@
+package com.example.demo.service;
+
+import com.example.demo.models.Medicine;
+
+import java.util.List;
+
+public interface CartService {
+    public List<Medicine> getAllByUsername(String username);
+    public Medicine addMedicineToCart(String username, String genericName);
+}

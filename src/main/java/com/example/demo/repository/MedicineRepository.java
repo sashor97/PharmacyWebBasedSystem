@@ -12,7 +12,7 @@ public interface MedicineRepository extends JpaRepository<Medicine, Long> {
     public List<Medicine> findAll();
     public Medicine save(Medicine medicine);
     public Optional<Medicine> findById(Long id);
-    public void deleteById(Long voziloId);
+    public void deleteById(Long id);
     public List<Medicine> findMedicineByAggregateState(String aggregateState);
     public List<Medicine> findByGenericName(String genericName);
 

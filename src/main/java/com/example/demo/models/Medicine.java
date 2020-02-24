@@ -10,23 +10,19 @@ public class Medicine{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToMany
-    List<User> userList;
-
+    @Column(name = "sostojba")
     private String aggregateState;
-
-
-
-
-    // ili validiraj u servis pri iteriranje na rezultatot od SPARQL kverito
+    @Column(name = "linkurl")
     private String url;
-
+    @Column(name = "generickoime")
     private String genericName;
+    @Column(name = "objasnuvanje")
     private String description;
-    private Double avgWeight; // Molekularna tezina
+    @Column(name = "prosecnatezina")
+    private Double avgWeight;
+    @Column(name = "hemiskaformula")
     private String chemicalFormula;
-
-
+    @Column(name = "indikacii")
     private String indication;
 
 

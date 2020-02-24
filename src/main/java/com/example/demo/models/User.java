@@ -1,6 +1,7 @@
 package com.example.demo.models;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -9,8 +10,8 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToMany
-    List<Medicine> medicineList;
+    @OneToMany
+    private List<Medicine> medicineList;
 
     private String username;
 
@@ -19,6 +20,7 @@ public class User {
     public User(String username,String password) {
         this.username=username;
         this.password=password;
+        this.medicineList=new ArrayList<Medicine>();
     }
 
     public List<Medicine> getMedicineList() {
@@ -44,7 +46,9 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
-    public User(){}
+    public User(){
+        this.medicineList=new ArrayList<Medicine>();
+    }
 
 
 }
