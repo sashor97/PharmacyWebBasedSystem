@@ -1,22 +1,12 @@
 package com.example.demo.web;
 
-import com.example.demo.jena.QueryDemo;
-
 import com.example.demo.models.Medicine;
-import com.example.demo.service.Impl.SparqlServiceImpl;
 import com.example.demo.service.SparqlService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
 
-/**
- * <p>demo controller</p>
- *
- * @author SageZhang
- * @version 2018/7/25
- */
 @CrossOrigin({"*","localhost:3000"})
 @RestController
 @RequestMapping("/home")
@@ -78,9 +68,9 @@ public class MedicineController {
         return sparqlService.searchMedicineByName(param);
     }
 
-    @RequestMapping(value = "/details/{param}")
+    @RequestMapping(value = "/details")
     @ResponseBody
-    public Medicine getMedicineByGenericName(@PathVariable("param") String param) {
-        return sparqlService.getMedicineByGenericName(param);
+    public Medicine getMedicineByGenericName(@RequestParam("name") String name) {
+        return sparqlService.getMedicineByGenericName(name);
     }
 }
