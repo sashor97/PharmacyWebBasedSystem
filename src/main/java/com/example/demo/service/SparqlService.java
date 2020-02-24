@@ -9,4 +9,5 @@ public interface SparqlService {
     public List<Medicine> getAllMedicineAggregate(Integer limit,String aggregateState);
   public List<Medicine> getAllMedicineSorted(Integer limit,String type);
     public List<Medicine> searchMedicineByName(String name);
+    Medicine getMedicineByGenericName(String param);
 }

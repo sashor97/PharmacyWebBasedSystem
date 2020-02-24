@@ -243,20 +243,55 @@ public class SparqlServiceImpl implements SparqlService {
             ResultSet resultSet = queryExecution.execSelect();
             while (resultSet.hasNext()) {
                 QuerySolution solution = resultSet.nextSolution();
-                Medicine med =new Medicine();
-                med.setUrl(getProperty(solution,"nameUrl"));
-                med.setAggregateState(getProperty(solution,"state"));
-                med.setGenericName(getProperty(solution,"genericName"));
-                med.setAvgWeight(Double.parseDouble(solution.get("avgWeight").toString()));
-                med.setChemicalFormula(getProperty(solution,"chemFormula"));
-                med.setIndication(getProperty(solution,"indication"));
-                med.setDescription(getProperty(solution,"description"));
-                list.add(med);
+                list.add(createMedicineBySolution(solution));
             }
         }
 
         System.out.println(list);
         return list;
+    }
+
+    @Override
+    public Medicine getMedicineByGenericName(String name) {
+        String SPARQLEndpoint = "http://wifo5-04.informatik.uni-mannheim.de/drugbank/sparql";
+        String query = "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>" +
+                "PREFIX drugbank: <http://wifo5-04.informatik.uni-mannheim.de/drugbank/resource/drugbank/>" +
+                "SELECT distinct ?nameUrl ?genericName ?chemFormula ?state ?description  ?indication ?avgWeight  ?pharmgkbId" +
+                "WHERE { " +
+                "drugbank:drugs ^a ?nameUrl." +
+                "?nameUrl drugbank:chemicalFormula ?chemFormula;" +
+                "drugbank:genericName '"+name+"';" +
+                "drugbank:genericName ?genericName;" +
+                "drugbank:state ?state;"+
+                "drugbank:description ?description;"+
+                "drugbank:indication ?indication;"+
+                "drugbank:molecularWeightAverage ?avgWeight;"+
+                "drugbank:pharmgkbId ?pharmgkbId." +
+                "}" + "" +
+                "LIMIT 1";
+
+        Medicine med =new Medicine();
+        Query sparqlQuery = QueryFactory.create(query);
+        try (QueryExecution queryExecution = QueryExecutionFactory.sparqlService(SPARQLEndpoint, sparqlQuery)) {
+            ResultSet resultSet = queryExecution.execSelect();
+            if(resultSet.hasNext()){
+                QuerySolution solution = resultSet.nextSolution();
+               med=createMedicineBySolution(solution);
+            }
+        }
+        return med;
+    }
+
+    private Medicine createMedicineBySolution(QuerySolution solution) {
+        Medicine med=new Medicine();
+        med.setUrl(getProperty(solution,"nameUrl"));
+        med.setAggregateState(getProperty(solution,"state"));
+        med.setGenericName(getProperty(solution,"genericName"));
+        med.setAvgWeight(Double.parseDouble(solution.get("avgWeight").toString()));
+        med.setChemicalFormula(getProperty(solution,"chemFormula"));
+        med.setIndication(getProperty(solution,"indication"));
+        med.setDescription(getProperty(solution,"description"));
+        return med;
     }
 
     private String getProperty(QuerySolution solution, String state){
