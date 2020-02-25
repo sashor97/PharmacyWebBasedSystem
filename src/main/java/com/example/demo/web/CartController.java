@@ -31,4 +31,9 @@ public class CartController {
     public Medicine addMedicineToCart(@RequestParam("username") String username, @RequestParam("genericName") String genericName) {
         return cartService.addMedicineToCart(username,genericName);
     }
+
+    @PostMapping(value = "/delete")
+    public void delete(@RequestParam("username") String username, @RequestParam("genericName") String genericName) {
+        cartService.deleteMedicine(username,genericName);
+    }
 }

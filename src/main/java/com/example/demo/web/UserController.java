@@ -1,11 +1,8 @@
 package com.example.demo.web;
 
-import com.example.demo.models.Medicine;
 import com.example.demo.models.User;
 import com.example.demo.service.UserService;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 import java.util.Optional;
 
 @CrossOrigin({"*","localhost:3000"})

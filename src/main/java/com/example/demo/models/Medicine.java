@@ -9,20 +9,14 @@ public class Medicine{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column(name = "sostojba",columnDefinition="sos")
     private String aggregateState;
-    @Column(name = "linkurl",columnDefinition="lin")
     private String url;
-    @Column(name = "generickoime",columnDefinition="gen")
     private String genericName;
-    @Column(name = "objasnuvanje",columnDefinition="des")
+    @Lob
+    @Column(name = "decription",length = 1024)
     private String description;
-    @Column(name = "prosecnatezina",columnDefinition="avgWe")
     private Double avgWeight;
-    @Column(name = "hemiskaformula",columnDefinition="hem")
     private String chemicalFormula;
-    @Column(name = "indikacii",columnDefinition="ind")
     private String indication;
 
 

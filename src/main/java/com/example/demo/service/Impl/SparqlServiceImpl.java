@@ -41,9 +41,9 @@ public class SparqlServiceImpl implements SparqlService {
                 String resultGenericName = solution.get("genericName").toString();  // mozhe da treba substring(1, length-2) za urls
                 String chemFormula = solution.get("chemFormula").toString();  // mozhe da treba substring(1, length-2) za urls
                 String indication = solution.get("indication").toString();
-                System.out.println(resultGenericName);
-                System.out.println(resultName);
-                System.out.println(chemFormula);
+//                System.out.println(resultGenericName);
+//                System.out.println(resultName);
+//                System.out.println(chemFormula);
                 Medicine med =new Medicine();
                 med.setUrl(getProperty(solution,"state"));
                 med.setAggregateState(solution.get("state").toString());

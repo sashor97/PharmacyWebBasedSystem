@@ -106,9 +106,9 @@ public class QueryDemo {
                 String resultName = solution.get("nameUrl").toString();  // mozhe da treba substring(1, length-2) za urls
                 String resultGenericName = solution.get("genericName").toString();  // mozhe da treba substring(1, length-2) za urls
                 String chemFormula = solution.get("chemFormula").toString();  // mozhe da treba substring(1, length-2) za urls
-                System.out.println(resultGenericName);
-                System.out.println(resultName);
-                System.out.println(chemFormula);
+//                System.out.println(resultGenericName);
+//                System.out.println(resultName);
+//                System.out.println(chemFormula);
                 lista.add(resultGenericName);
 
             }

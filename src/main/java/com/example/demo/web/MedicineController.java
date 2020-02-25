@@ -36,15 +36,15 @@ public class MedicineController {
     public List<Medicine> getAggregateState(@PathVariable("param")Optional<Integer> param,@PathVariable("state")String state)
     {
         if(!param.isPresent()){
-            param=Optional.of(500);
+            param=Optional.of(10);
         }
-        if(state.equals("Liquid"))
+        if(state.equals("liquid"))
         {
-            return sparqlService.getAllMedicineAggregate(param.get(),"Liquid");
+            return sparqlService.getAllMedicineAggregate(param.get(),"liquid");
         }
-        else if(state.equals("Solid"))
+        else if(state.equals("solid"))
         {
-            return sparqlService.getAllMedicineAggregate(param.get(),"Solid");
+            return sparqlService.getAllMedicineAggregate(param.get(),"solid");
         }
         else{
             return sparqlService.getAllMedicine(10);
@@ -68,9 +68,9 @@ public class MedicineController {
         return sparqlService.searchMedicineByName(param);
     }
 
-    @RequestMapping(value = "/details")
+    @RequestMapping(value = "/details/{name}")
     @ResponseBody
-    public Medicine getMedicineByGenericName(@RequestParam("name") String name) {
+    public Medicine getMedicineByGenericName(@PathVariable("name") String name) {
         return sparqlService.getMedicineByGenericName(name);
     }
 }

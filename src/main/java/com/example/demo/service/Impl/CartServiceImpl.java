@@ -32,12 +32,26 @@ public class CartServiceImpl implements CartService {
     @Override
     public Medicine addMedicineToCart(String username, String genericName) {
         Optional<User> user = userRepository.findByUsername(username);
-        Medicine medicine=sparqlService.getMedicineByGenericName(genericName);
-        if(user.isPresent()){
-            Medicine newMedicine=medicineRepository.save(medicine);
+        Medicine medicine = sparqlService.getMedicineByGenericName(genericName);
+        if (user.isPresent() && medicine.getGenericName() != null) {
+            Medicine newMedicine = medicineRepository.save(medicine);
             user.get().getMedicineList().add(newMedicine);
             userRepository.save(user.get());
         }
         return medicine;
+    }
+
+    @Override
+    public void deleteMedicine(String username, String genericName) {
+        Optional<User> user = userRepository.findByUsername(username);
+        if (user.isPresent()) {
+            List<Medicine> medicineList = user.get().getMedicineList();
+            Medicine medicine=medicineList.stream().filter(med->med.getGenericName().equals(genericName)).findAny().orElse(null);
+            if(medicine!=null){
+                medicineList.remove(medicine);
+            }
+            userRepository.save(user.get());
+            medicineRepository.deleteById(medicine.getId());
+        }
     }
 }
