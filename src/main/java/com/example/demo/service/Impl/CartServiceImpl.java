@@ -9,6 +9,7 @@ import com.example.demo.service.SparqlService;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -46,12 +47,40 @@ public class CartServiceImpl implements CartService {
         Optional<User> user = userRepository.findByUsername(username);
         if (user.isPresent()) {
             List<Medicine> medicineList = user.get().getMedicineList();
-            Medicine medicine=medicineList.stream().filter(med->med.getGenericName().equals(genericName)).findAny().orElse(null);
-            if(medicine!=null){
+            Medicine medicine = medicineList.stream().filter(med -> med.getGenericName().equals(genericName)).findAny().orElse(null);
+            if (medicine != null) {
                 medicineList.remove(medicine);
             }
             userRepository.save(user.get());
             medicineRepository.deleteById(medicine.getId());
         }
+    }
+
+    @Override
+    public List<Medicine> getAllSorted(String username, String type) {
+         List<Medicine> medicines=new ArrayList<>();
+
+        if (type.equals("asc")) {
+//            Optional<User> user = userRepository.findByUsername(username);
+//            if (user.isPresent()) {
+//                medicines = user.get().getMedicineList();
+//                medicines.sort(Comparator.comparing(Medicine::getAvgWeight));
+               medicines= userRepository.findByUsername(username).map(User::getMedicineList).orElseGet(ArrayList::new);
+              medicines.sort(Comparator.comparing(Medicine::getAvgWeight));
+              // return medicines;
+            }
+
+        else if (type.equals("desc")) {
+          //  Optional<User> user = userRepository.findByUsername(username);
+        //    if (user.isPresent()) {
+//                medicines = user.get().getMedicineList();
+//                medicines.sort(Comparator.comparing(Medicine::getAvgWeight).reversed());
+                medicines= userRepository.findByUsername(username).map(User::getMedicineList).orElseGet(ArrayList::new);
+                medicines.sort(Comparator.comparing(Medicine::getAvgWeight).reversed());
+                //return medicines;
+            }
+
+       return medicines;
+
     }
 }

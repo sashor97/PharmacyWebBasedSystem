@@ -6,6 +6,7 @@ import com.example.demo.service.SparqlService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @CrossOrigin({"*", "localhost:3000"})
 @RestController
@@ -26,6 +27,11 @@ public class CartController {
         return cartService.getAllByUsername(username);
     }
 
+    @PostMapping(value = "/sort")
+    @ResponseBody
+    public List<Medicine> getAllSort(@RequestParam("username") String username, @RequestParam("type") String type) {
+        return cartService.getAllSorted(username,type);
+    }
     @PostMapping(value = "/addToCart")
     @ResponseBody
     public Medicine addMedicineToCart(@RequestParam("username") String username, @RequestParam("genericName") String genericName) {
