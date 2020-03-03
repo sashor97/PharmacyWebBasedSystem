@@ -17,6 +17,8 @@ public class Medicine{
     private String description;
     private Double avgWeight;
     private String chemicalFormula;
+    @Lob
+    @Column(name = "indication",length = 1024)
     private String indication;
 
 

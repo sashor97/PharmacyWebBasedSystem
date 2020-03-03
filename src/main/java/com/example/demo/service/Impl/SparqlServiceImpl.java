@@ -282,6 +282,16 @@ public class SparqlServiceImpl implements SparqlService {
         return med;
     }
 
+    @Override
+    public List<Medicine> getAllMedicineByPage(Integer number) {
+        List<Medicine> allMedicine=getAllMedicine(100);
+        int startIndex=(number-1)*9;
+        int endIndex=number*9;
+        if(startIndex>endIndex || startIndex<0 || endIndex>allMedicine.size())
+            return new ArrayList<>();
+        return allMedicine.subList(startIndex,endIndex);
+    }
+
     private Medicine createMedicineBySolution(QuerySolution solution) {
         Medicine med=new Medicine();
         med.setUrl(getProperty(solution,"nameUrl"));
