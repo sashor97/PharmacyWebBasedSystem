@@ -74,4 +74,9 @@ public class MedicineController {
     public List<Medicine> getByPage(@PathVariable("number") Integer number) {
         return sparqlService.getAllMedicineByPage(number);
     }
+    @RequestMapping(value = "/page/{state}/{number}")
+    @ResponseBody
+    public List<Medicine> getByPageAndState(@PathVariable("state") String state, @PathVariable("number") Integer number) {
+        return sparqlService.getMedicineByPageAndState(state,number);
+    }
 }

@@ -10,6 +10,6 @@ public interface SparqlService {
   public List<Medicine> getAllMedicineSorted(Integer limit,String type);
     public List<Medicine> searchMedicineByName(String name);
     Medicine getMedicineByGenericName(String param);
-
+    List<Medicine> getMedicineByPageAndState(String state, Integer page);
     List<Medicine> getAllMedicineByPage(Integer number);
 }
